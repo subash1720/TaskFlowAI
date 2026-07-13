@@ -1,0 +1,15 @@
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+h1 {
+  text-align: center;
+  margin-top: 40px;
+  color: #1976d2;
+}
+
+p {
+  text-align: center;
+  color: #555;
+}
