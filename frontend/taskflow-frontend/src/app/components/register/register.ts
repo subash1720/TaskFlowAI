@@ -37,6 +37,7 @@ export class Register {
   private router = inject(Router);
 
   register() {
+    console.log('🚀 Registration Triggered for Name:', this.name, 'Email:', this.email);
     if (!this.name.trim() || !this.email.trim() || !this.password || !this.confirmPassword) {
       alert('Please fill out all fields.');
       return;
@@ -53,14 +54,16 @@ export class Register {
       password: this.password
     };
 
+    console.log('Sending registration payload:', regData);
+
     this.authService.register(regData).subscribe({
       next: (response: any) => {
-        console.log(response);
+        console.log('✅ Registration API Response:', response);
         alert('Registration Successful! Please log in with your credentials.');
         this.router.navigate(['/login']);
       },
       error: (error) => {
-        console.error(error);
+        console.error('❌ Registration API Error:', error);
         alert(error.error?.message || 'Registration failed. Please try again.');
       }
     });
