@@ -1,16 +1,57 @@
 const Task = require("../models/Task");
 
+// Helper to parse dates safely from different formats
+const parseSafeDate = (dateStr) => {
+  if (!dateStr || typeof dateStr !== 'string' || dateStr.trim() === '') {
+    return null;
+  }
+
+  // 1. Try standard JS Date parsing
+  let date = new Date(dateStr);
+  if (!isNaN(date.getTime())) {
+    return date;
+  }
+
+  // 2. Try DD-MM-YYYY format
+  const matchDashes = dateStr.trim().match(/^(\d{1,2})-(\d{1,2})-(\d{4})$/);
+  if (matchDashes) {
+    const day = parseInt(matchDashes[1], 10);
+    const month = parseInt(matchDashes[2], 10) - 1; // 0-based
+    const year = parseInt(matchDashes[3], 10);
+    date = new Date(year, month, day);
+    if (!isNaN(date.getTime())) {
+      return date;
+    }
+  }
+
+  // 3. Try DD/MM/YYYY format
+  const matchSlashes = dateStr.trim().match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+  if (matchSlashes) {
+    const day = parseInt(matchSlashes[1], 10);
+    const month = parseInt(matchSlashes[2], 10) - 1; // 0-based
+    const year = parseInt(matchSlashes[3], 10);
+    date = new Date(year, month, day);
+    if (!isNaN(date.getTime())) {
+      return date;
+    }
+  }
+
+  return null;
+};
+
 // Create Task
 const createTask = async (req, res) => {
   try {
     const { title, description, priority, status, dueDate } = req.body;
+
+    const parsedDueDate = parseSafeDate(dueDate);
 
     const task = await Task.create({
       title,
       description,
       priority,
       status,
-      dueDate,
+      dueDate: parsedDueDate,
       user: req.user.id,
     });
 
@@ -47,10 +88,15 @@ const getTasks = async (req, res) => {
 // Update Task
 const updateTask = async (req, res) => {
   try {
+    const updateData = { ...req.body };
+
+    if (updateData.hasOwnProperty('dueDate')) {
+      updateData.dueDate = parseSafeDate(updateData.dueDate);
+    }
 
     const updatedTask = await Task.findByIdAndUpdate(
       req.params.id,
-      req.body,
+      updateData,
       {
         returnDocument: "after",
         runValidators: true,
