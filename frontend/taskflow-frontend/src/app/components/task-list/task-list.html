@@ -1,2 +1,117 @@
-<h2>Task List</h2>
-<p>All your tasks will appear here.</p>
+<div class="task-list-container">
+  <header class="list-header">
+    <div>
+      <h1>📋 Task Manager</h1>
+      <p>Search, filter, and organize all your tasks.</p>
+    </div>
+    <button mat-raised-button color="primary" routerLink="/task-form">
+      <mat-icon>add</mat-icon> Add Task
+    </button>
+  </header>
+
+  <!-- Filter Controls -->
+  <mat-card class="filter-card">
+    <mat-card-content class="filter-controls-grid">
+      <!-- Search Input -->
+      <mat-form-field appearance="outline" class="search-field">
+        <mat-label>Search Tasks</mat-label>
+        <input matInput [(ngModel)]="searchQuery" (input)="applyFiltersAndSort()" placeholder="Search by title or details...">
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+
+      <!-- Status Filter -->
+      <mat-form-field appearance="outline" class="select-field">
+        <mat-label>Status</mat-label>
+        <mat-select [(ngModel)]="statusFilter" (selectionChange)="applyFiltersAndSort()">
+          <mat-option value="All">All Statuses</mat-option>
+          <mat-option value="Pending">Pending</mat-option>
+          <mat-option value="In Progress">In Progress</mat-option>
+          <mat-option value="Completed">Completed</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- Priority Filter -->
+      <mat-form-field appearance="outline" class="select-field">
+        <mat-label>Priority</mat-label>
+        <mat-select [(ngModel)]="priorityFilter" (selectionChange)="applyFiltersAndSort()">
+          <mat-option value="All">All Priorities</mat-option>
+          <mat-option value="Low">Low</mat-option>
+          <mat-option value="Medium">Medium</mat-option>
+          <mat-option value="High">High</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- Sort Selection -->
+      <mat-form-field appearance="outline" class="select-field">
+        <mat-label>Sort By</mat-label>
+        <mat-select [(ngModel)]="sortBy" (selectionChange)="applyFiltersAndSort()">
+          <mat-option value="createdAt">Date Created (Newest)</mat-option>
+          <mat-option value="dueDate">Due Date (Soonest)</mat-option>
+          <mat-option value="title">Alphabetical (A-Z)</mat-option>
+          <mat-option value="priority">Priority (High to Low)</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <button mat-stroked-button class="clear-btn" (click)="clearFilters()">
+        Reset Filters
+      </button>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Tasks Display -->
+  <div class="tasks-grid">
+    @if (filteredTasks.length === 0) {
+      <div class="no-results">
+        <mat-icon>search_off</mat-icon>
+        <h3>No tasks match your criteria</h3>
+        <p>Try modifying your keywords or filters above, or create a new task.</p>
+      </div>
+    } @else {
+      @for (task of filteredTasks; track task._id) {
+        <mat-card class="task-card">
+          <mat-card-content class="task-card-content">
+            <div class="task-card-header-row">
+              <div class="title-section">
+                <button mat-icon-button (click)="toggleStatus(task)" [title]="'Status: ' + task.status + ' (Click to change)'">
+                  @if (task.status === 'Completed') {
+                    <mat-icon style="color: #4caf50;">check_box</mat-icon>
+                  } @else if (task.status === 'In Progress') {
+                    <mat-icon style="color: #ff9800;">indeterminate_check_box</mat-icon>
+                  } @else {
+                    <mat-icon style="color: #ccc;">check_box_outline_blank</mat-icon>
+                  }
+                </button>
+                <h3 [class.completed-text]="task.status === 'Completed'">{{ task.title }}</h3>
+              </div>
+              <div class="badges-row">
+                <span class="badge" [ngClass]="task.priority.toLowerCase()">{{ task.priority }}</span>
+                <span class="badge status" [ngClass]="task.status.toLowerCase().replace(' ', '-')">{{ task.status }}</span>
+              </div>
+            </div>
+
+            <p class="description-text">{{ task.description || 'No description provided.' }}</p>
+
+            <div class="task-card-footer">
+              <span class="due-info" [class.overdue]="isOverdue(task)">
+                @if (task.dueDate) {
+                  <mat-icon>event</mat-icon> Due: {{ task.dueDate | date:'mediumDate' }}
+                } @else {
+                  <mat-icon>event_note</mat-icon> No Due Date
+                }
+              </span>
+
+              <div class="actions">
+                <button mat-icon-button color="primary" (click)="editTask(task)" title="Edit">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-icon-button color="warn" (click)="deleteTask(task._id)" title="Delete">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      }
+    }
+  </div>
+</div>

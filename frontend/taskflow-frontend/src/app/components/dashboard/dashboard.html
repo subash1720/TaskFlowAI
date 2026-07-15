@@ -1,2 +1,126 @@
-<h2>Dashboard</h2>
-<p>Welcome to your dashboard.</p>
+<div class="dashboard-container">
+  <!-- Greeting Header -->
+  <header class="dashboard-header">
+    <div class="header-text">
+      <h1>👋 Welcome back, {{ userName }}!</h1>
+      <p>Here is your smart task overview for today.</p>
+    </div>
+    <button mat-raised-button color="primary" routerLink="/task-form" class="add-task-btn">
+      <mat-icon>add</mat-icon> Create Task
+    </button>
+  </header>
+
+  <!-- Statistics Overview Grid -->
+  <section class="metrics-grid">
+    <mat-card class="metric-card total">
+      <mat-card-header>
+        <mat-card-title>{{ tasks.length }}</mat-card-title>
+        <mat-card-subtitle>Total Tasks</mat-card-subtitle>
+      </mat-card-header>
+      <mat-icon class="metric-icon">assignment</mat-icon>
+    </mat-card>
+
+    <mat-card class="metric-card pending">
+      <mat-card-header>
+        <mat-card-title>{{ pendingCount }}</mat-card-title>
+        <mat-card-subtitle>Pending</mat-card-subtitle>
+      </mat-card-header>
+      <mat-icon class="metric-icon">hourglass_empty</mat-icon>
+    </mat-card>
+
+    <mat-card class="metric-card in-progress">
+      <mat-card-header>
+        <mat-card-title>{{ inProgressCount }}</mat-card-title>
+        <mat-card-subtitle>In Progress</mat-card-subtitle>
+      </mat-card-header>
+      <mat-icon class="metric-icon">trending_flat</mat-icon>
+    </mat-card>
+
+    <mat-card class="metric-card completed">
+      <mat-card-header>
+        <mat-card-title>{{ completedCount }}</mat-card-title>
+        <mat-card-subtitle>Completed</mat-card-subtitle>
+      </mat-card-header>
+      <mat-icon class="metric-icon">check_circle</mat-icon>
+    </mat-card>
+
+    <mat-card class="metric-card high-priority">
+      <mat-card-header>
+        <mat-card-title>{{ highPriorityCount }}</mat-card-title>
+        <mat-card-subtitle>High Priority</mat-card-subtitle>
+      </mat-card-header>
+      <mat-icon class="metric-icon">error_outline</mat-icon>
+    </mat-card>
+  </section>
+
+  <!-- Progress Bar Card -->
+  <mat-card class="progress-card">
+    <mat-card-content>
+      <div class="progress-label">
+        <span>Completion Progress</span>
+        <strong>{{ completionPercentage }}%</strong>
+      </div>
+      <mat-progress-bar mode="determinate" [value]="completionPercentage"></mat-progress-bar>
+    </mat-card-content>
+  </mat-card>
+
+  <!-- Tasks Section -->
+  <section class="tasks-section">
+    <div class="section-title">
+      <h2>📋 Recent Tasks</h2>
+      <a routerLink="/tasks" class="view-all-link">View All Tasks <mat-icon>arrow_forward</mat-icon></a>
+    </div>
+
+    @if (tasks.length === 0) {
+      <div class="empty-state">
+        <mat-icon>assignment_late</mat-icon>
+        <h3>No tasks found</h3>
+        <p>You haven't created any tasks yet. Click "Create Task" to get started!</p>
+      </div>
+    } @else {
+      <div class="tasks-list">
+        @for (task of tasks.slice(0, 5); track task._id) {
+          <mat-card class="task-summary-card">
+            <mat-card-content class="task-summary-content">
+              <div class="task-main-info">
+                <button mat-icon-button (click)="toggleStatus(task)" [title]="'Status: ' + task.status + ' (Click to change)'">
+                  @if (task.status === 'Completed') {
+                    <mat-icon style="color: #4caf50;">check_box</mat-icon>
+                  } @else if (task.status === 'In Progress') {
+                    <mat-icon style="color: #ff9800;">indeterminate_check_box</mat-icon>
+                  } @else {
+                    <mat-icon style="color: #ccc;">check_box_outline_blank</mat-icon>
+                  }
+                </button>
+                <div class="task-details">
+                  <h3 [class.completed-text]="task.status === 'Completed'">{{ task.title }}</h3>
+                  <p class="task-desc">{{ task.description | slice:0:100 }}{{ task.description.length > 100 ? '...' : '' }}</p>
+                </div>
+              </div>
+
+              <div class="task-meta">
+                <span class="badge" [ngClass]="task.priority.toLowerCase()">{{ task.priority }}</span>
+                <span class="badge status" [ngClass]="task.status.toLowerCase().replace(' ', '-')">{{ task.status }}</span>
+                
+                @if (task.dueDate) {
+                  <span class="due-date">
+                    <mat-icon>event</mat-icon> {{ task.dueDate | date:'mediumDate' }}
+                  </span>
+                }
+              </div>
+
+              <div class="task-actions">
+                <button mat-icon-button color="primary" (click)="editTask(task)" title="Edit Task">
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-icon-button color="warn" (click)="deleteTask(task._id)" title="Delete Task">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+            </mat-card-content>
+          </mat-card>
+        }
+      </div>
+    }
+  </section>
+</div>

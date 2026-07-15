@@ -1,2 +1,124 @@
-<h2>Task Form</h2>
-<p>Add or edit a task.</p>
+<div class="task-form-container">
+  <mat-card class="form-card">
+    <mat-card-header>
+      <mat-card-title>
+        {{ isEdit ? '✏️ Edit Task' : '➕ Add New Task' }}
+      </mat-card-title>
+      <mat-card-subtitle>
+        Manage task details and use AI assistant suggestions.
+      </mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="form-grid">
+        <!-- Main Form Section -->
+        <div class="form-fields">
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Task Title</mat-label>
+            <input matInput [(ngModel)]="task.title" placeholder="e.g. Implement user login integration" required>
+            <button mat-icon-button matSuffix (click)="analyzeWithAI()" [disabled]="isAnalyzing" title="Analyze with AI">
+              <mat-icon style="color: #6200ee;">psychology</mat-icon>
+            </button>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Description</mat-label>
+            <textarea matInput rows="6" [(ngModel)]="task.description" placeholder="Provide background context, criteria, or subtasks..."></textarea>
+          </mat-form-field>
+
+          <div class="form-row">
+            <mat-form-field appearance="outline" class="half-width">
+              <mat-label>Priority</mat-label>
+              <mat-select [(ngModel)]="task.priority">
+                <mat-option value="Low">Low</mat-option>
+                <mat-option value="Medium">Medium</mat-option>
+                <mat-option value="High">High</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="half-width">
+              <mat-label>Status</mat-label>
+              <mat-select [(ngModel)]="task.status">
+                <mat-option value="Pending">Pending</mat-option>
+                <mat-option value="In Progress">In Progress</mat-option>
+                <mat-option value="Completed">Completed</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Due Date</mat-label>
+            <input matInput type="date" [(ngModel)]="task.dueDate">
+          </mat-form-field>
+
+          <div class="form-actions">
+            <button mat-raised-button color="primary" (click)="saveTask()">
+              <mat-icon>save</mat-icon> {{ isEdit ? 'Update Task' : 'Create Task' }}
+            </button>
+            <button mat-raised-button color="accent" type="button" (click)="analyzeWithAI()" [disabled]="isAnalyzing">
+              <mat-icon>psychology</mat-icon> Ask AI
+            </button>
+            <button mat-button routerLink="/dashboard" type="button">
+              Cancel
+            </button>
+          </div>
+        </div>
+
+        <!-- AI Panel Section -->
+        <div class="ai-panel">
+          @if (isAnalyzing) {
+            <div class="ai-loader">
+              <mat-spinner diameter="40"></mat-spinner>
+              <p>TaskFlow AI is analyzing your title...</p>
+            </div>
+          }
+
+          @if (aiAnalysis) {
+            <mat-card class="ai-insights-card">
+              <mat-card-header>
+                <mat-card-title style="color: #6200ee; font-size: 1.1rem; display: flex; align-items: center; gap: 8px;">
+                  <mat-icon>psychology</mat-icon> AI Task Insights
+                </mat-card-title>
+                <mat-card-subtitle>Confidence: {{ aiAnalysis.aiConfidence }}</mat-card-subtitle>
+              </mat-card-header>
+              <mat-card-content>
+                <div class="insight-item">
+                  <strong>Recommended Priority:</strong>
+                  <span class="badge" [ngClass]="aiAnalysis.priority.toLowerCase()">{{ aiAnalysis.priority }}</span>
+                </div>
+                <div class="insight-item">
+                  <strong>Category Classification:</strong>
+                  <span class="badge category">{{ aiAnalysis.category }}</span>
+                </div>
+                <div class="insight-item">
+                  <strong>Estimated Effort:</strong>
+                  <span>{{ aiAnalysis.estimatedHours }} hours</span>
+                </div>
+                <div class="insight-item subtasks">
+                  <strong>Suggested Action Plan:</strong>
+                  <ul>
+                    @for (subtask of aiAnalysis.subtasks; track subtask) {
+                      <li>{{ subtask }}</li>
+                    }
+                  </ul>
+                </div>
+                
+                <button mat-raised-button class="apply-ai-btn" (click)="applyAISuggestions()">
+                  <mat-icon>check_circle</mat-icon> Apply Suggestions & Plan
+                </button>
+              </mat-card-content>
+            </mat-card>
+          }
+
+          @if (!isAnalyzing && !aiAnalysis) {
+            <div class="ai-placeholder">
+              <mat-icon style="font-size: 48px; width: 48px; height: 48px; color: #ccc;">psychology</mat-icon>
+              <h3>Smart AI Assistant</h3>
+              <p>Type a task title and click "Ask AI" to get automated action plans, priority detection, and effort estimation.</p>
+            </div>
+          }
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

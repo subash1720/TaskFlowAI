@@ -1,0 +1,233 @@
+.task-list-container {
+  padding: 30px 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.list-header h1 {
+  margin: 0 0 5px 0;
+  font-size: 2rem;
+  color: #111;
+}
+
+.list-header p {
+  margin: 0;
+  color: #666;
+}
+
+.filter-card {
+  margin-bottom: 30px;
+  border-radius: 8px;
+}
+
+.filter-controls-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr auto;
+  gap: 15px;
+  align-items: center;
+}
+
+.filter-controls-grid mat-form-field {
+  width: 100%;
+}
+
+/* Remove default material wrapper padding for compact look */
+.filter-controls-grid ::ng-deep .mat-mdc-form-field-subscript-wrapper {
+  display: none;
+}
+
+.clear-btn {
+  height: 48px;
+  border-radius: 4px;
+}
+
+.tasks-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+  gap: 20px;
+}
+
+.no-results {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 60px 20px;
+  color: #777;
+  border: 2px dashed rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.no-results mat-icon {
+  font-size: 48px;
+  width: 48px;
+  height: 48px;
+  margin-bottom: 10px;
+}
+
+.task-card {
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.task-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+}
+
+.task-card-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 16px !important;
+  box-sizing: border-box;
+}
+
+.task-card-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+  gap: 10px;
+}
+
+.title-section {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+}
+
+.title-section h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: #222;
+  line-height: 1.3;
+}
+
+.title-section h3.completed-text {
+  text-decoration: line-through;
+  color: #888;
+}
+
+.badges-row {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.badge {
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+/* Priority badges */
+.badge.high { background: rgba(244, 67, 54, 0.1); color: #f44336; }
+.badge.medium { background: rgba(255, 152, 0, 0.1); color: #ff9800; }
+.badge.low { background: rgba(76, 175, 80, 0.1); color: #4caf50; }
+
+/* Status badges */
+.badge.status { border: 1px solid #ccc; background: #fff; color: #555; }
+.badge.status.pending { border-color: #9c27b0; color: #9c27b0; background: rgba(156, 39, 176, 0.05); }
+.badge.status.in-progress { border-color: #ff9800; color: #ff9800; background: rgba(255, 152, 0, 0.05); }
+.badge.status.completed { border-color: #4caf50; color: #4caf50; background: rgba(76, 175, 80, 0.05); }
+
+.description-text {
+  margin: 0 0 20px 0;
+  font-size: 0.88rem;
+  color: #555;
+  line-height: 1.45;
+  white-space: pre-wrap;
+  flex-grow: 1;
+}
+
+.task-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  padding-top: 12px;
+  margin-top: auto;
+}
+
+.due-info {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.8rem;
+  color: #666;
+}
+
+.due-info.overdue {
+  color: #f44336;
+  font-weight: 600;
+}
+
+.due-info mat-icon {
+  font-size: 16px;
+  width: 16px;
+  height: 16px;
+}
+
+.actions {
+  display: flex;
+  gap: 2px;
+}
+
+@media (max-width: 1024px) {
+  .filter-controls-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  
+  .search-field {
+    grid-column: 1 / -1;
+  }
+  
+  .clear-btn {
+    grid-column: 1 / -1;
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .list-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+  
+  .list-header button {
+    width: 100%;
+  }
+  
+  .filter-controls-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .tasks-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .task-card-header-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .badges-row {
+    margin-left: 40px;
+    margin-top: 5px;
+  }
+}

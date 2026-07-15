@@ -1,19 +1,26 @@
-<nav class="navbar">
+<nav class="navbar-container">
+  <div class="logo-section" [routerLink]="isLoggedIn() ? '/dashboard' : '/login'">
+    <span class="logo-emoji">🚀</span>
+    <span class="logo-text">TaskFlow <span class="ai-badge">AI</span></span>
+  </div>
 
-    <div class="logo" routerLink="/dashboard">
-        🚀 TaskFlow AI
-    </div>
-
-    <div class="menu">
-
-        <a routerLink="/login">Login</a>
-
-        <a routerLink="/register">Register</a>
-
-        <a routerLink="/dashboard">Dashboard</a>
-
-        <a routerLink="/tasks">Tasks</a>
-
-    </div>
-
+  <div class="menu-section">
+    @if (!isLoggedIn()) {
+      <a routerLink="/login" routerLinkActive="active-link" class="nav-item">Login</a>
+      <a routerLink="/register" routerLinkActive="active-link" class="nav-item">Register</a>
+    } @else {
+      <a routerLink="/dashboard" routerLinkActive="active-link" class="nav-item">Dashboard</a>
+      <a routerLink="/tasks" routerLinkActive="active-link" class="nav-item">Task Manager</a>
+      
+      <div class="user-profile-menu">
+        <span class="user-greeting">
+          <mat-icon>account_circle</mat-icon>
+          <span>{{ getUserName() }}</span>
+        </span>
+        <button mat-flat-button color="warn" (click)="logout()" class="logout-btn">
+          <mat-icon>exit_to_app</mat-icon> Logout
+        </button>
+      </div>
+    }
+  </div>
 </nav>

@@ -1,26 +1,111 @@
-.navbar {
+.navbar-container {
+  height: 70px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-
-  background-color: #1976d2;
-  color: white;
-
-  padding: 15px 40px;
+  background: #ffffff;
+  padding: 0 40px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
-.logo {
-  font-size: 24px;
-  font-weight: bold;
+.logo-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: #111;
 }
 
-.menu a {
+.logo-emoji {
+  font-size: 1.5rem;
+}
+
+.ai-badge {
+  background: linear-gradient(135deg, #6200ee, #9c27b0);
   color: white;
+  font-size: 0.75rem;
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-left: 4px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+}
+
+.menu-section {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+
+.nav-item {
   text-decoration: none;
-  margin-left: 20px;
-  font-size: 18px;
+  color: #555;
+  font-weight: 500;
+  font-size: 0.95rem;
+  padding: 6px 12px;
+  border-radius: 4px;
+  transition: all 0.2s;
 }
 
-.menu a:hover {
-  text-decoration: underline;
+.nav-item:hover {
+  color: #6200ee;
+  background: rgba(98, 0, 238, 0.05);
+}
+
+.nav-item.active-link {
+  color: #6200ee;
+  font-weight: 600;
+  background: rgba(98, 0, 238, 0.08);
+}
+
+.user-profile-menu {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  border-left: 1px solid rgba(0, 0, 0, 0.1);
+  padding-left: 20px;
+}
+
+.user-greeting {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.user-greeting mat-icon {
+  color: #6200ee;
+}
+
+.logout-btn {
+  height: 36px !important;
+  font-size: 0.85rem !important;
+  border-radius: 4px !important;
+}
+
+@media (max-width: 768px) {
+  .navbar-container {
+    padding: 0 20px;
+  }
+  
+  .menu-section {
+    gap: 10px;
+  }
+  
+  .user-profile-menu {
+    border-left: none;
+    padding-left: 5px;
+    gap: 10px;
+  }
+  
+  .user-greeting span {
+    display: none; /* Hide text on mobile, just show icon */
+  }
 }

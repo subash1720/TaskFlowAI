@@ -1,19 +1,50 @@
 import { Routes } from '@angular/router';
-
-import { Login } from './components/login/login';
-import { Register } from './components/register/register';
-import { Dashboard } from './components/dashboard/dashboard';
-import { TaskList } from './components/task-list/task-list';
-import { TaskForm } from './components/task-form/task-form';
+import { authGuard, guestGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  {
+    path: '',
+    redirectTo: 'login',
+    pathMatch: 'full'
+  },
 
-  { path: 'login', component: Login },
-  { path: 'register', component: Register },
-  { path: 'dashboard', component: Dashboard },
-  { path: 'tasks', component: TaskList },
-  { path: 'task-form', component: TaskForm },
+  {
+    path: 'login',
+    loadComponent: () =>
+      import('./components/login/login').then(m => m.LoginComponent),
+    canActivate: [guestGuard]
+  },
 
-  { path: '**', redirectTo: 'login' }
+  {
+    path: 'register',
+    loadComponent: () =>
+      import('./components/register/register').then(m => m.Register),
+    canActivate: [guestGuard]
+  },
+
+  {
+    path: 'dashboard',
+    loadComponent: () =>
+      import('./components/dashboard/dashboard').then(m => m.Dashboard),
+    canActivate: [authGuard]
+  },
+
+  {
+    path: 'tasks',
+    loadComponent: () =>
+      import('./components/task-list/task-list').then(m => m.TaskList),
+    canActivate: [authGuard]
+  },
+
+  {
+    path: 'task-form',
+    loadComponent: () =>
+      import('./components/task-form/task-form').then(m => m.TaskForm),
+    canActivate: [authGuard]
+  },
+
+  {
+    path: '**',
+    redirectTo: 'login'
+  }
 ];

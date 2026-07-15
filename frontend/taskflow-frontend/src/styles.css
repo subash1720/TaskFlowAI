@@ -1,1 +1,280 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
+
+/* Unified Dark Theme & Glassmorphism Design System */
+:root {
+  --bg-primary: #0a0b10;
+  --bg-secondary: #12131e;
+  --card-bg: rgba(22, 24, 38, 0.65);
+  --card-border: rgba(255, 255, 255, 0.06);
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --accent-primary: #8b5cf6; /* Violet */
+  --accent-secondary: #d946ef; /* Magenta */
+  --success: #10b981;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+  --font-family: 'Outfit', 'Inter', 'Roboto', sans-serif;
+  
+  /* Material 3 CSS System Overrides */
+  --mat-sys-surface: #12131e;
+  --mat-sys-on-surface: #f1f5f9;
+  --mat-sys-surface-container-low: #161826;
+  --mat-sys-surface-container: #1b1d2e;
+  --mat-sys-primary: #8b5cf6;
+  --mat-sys-on-primary: #ffffff;
+  --mat-sys-secondary: #d946ef;
+  --mat-sys-on-secondary: #ffffff;
+  --mat-sys-outline: rgba(255, 255, 255, 0.12);
+  --mat-sys-outline-variant: rgba(255, 255, 255, 0.06);
+  --mat-sys-error: #ef4444;
+}
+
+* {
+  box-sizing: border-box;
+  font-family: var(--font-family) !important;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: radial-gradient(circle at 80% 20%, #16122c 0%, #0a0b10 100%) !important;
+  color: var(--text-primary) !important;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Glassmorphism Card Style */
+.mat-mdc-card {
+  background: var(--card-bg) !important;
+  border: 1px solid var(--card-border) !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3) !important;
+  color: var(--text-primary) !important;
+}
+
+.mat-mdc-card-header .mat-mdc-card-title {
+  color: var(--text-primary) !important;
+  font-weight: 700 !important;
+}
+
+.mat-mdc-card-header .mat-mdc-card-subtitle {
+  color: var(--text-secondary) !important;
+}
+
+/* Global Navbar Custom Styling overrides */
+.navbar-container {
+  background: rgba(10, 11, 16, 0.7) !important;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--card-border) !important;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1) !important;
+}
+
+.logo-text {
+  color: var(--text-primary) !important;
+}
+
+.nav-item {
+  color: var(--text-secondary) !important;
+}
+
+.nav-item:hover {
+  color: var(--accent-primary) !important;
+  background: rgba(139, 92, 246, 0.08) !important;
+}
+
+.nav-item.active-link {
+  color: var(--accent-primary) !important;
+  background: rgba(139, 92, 246, 0.12) !important;
+}
+
+.user-greeting {
+  color: var(--text-primary) !important;
+}
+
+.user-greeting mat-icon {
+  color: var(--accent-primary) !important;
+}
+
+/* Auth Pages Overrides */
+.login-container, .register-container {
+  background: transparent !important;
+  height: 85vh !important;
+}
+
+.login-card, .register-card {
+  background: var(--card-bg) !important;
+  border: 1px solid var(--card-border) !important;
+  border-radius: 16px !important;
+}
+
+.login-text, .register-text {
+  color: var(--text-secondary) !important;
+}
+
+.login-text a, .register-text a {
+  color: var(--accent-primary) !important;
+}
+
+/* Input Fields Overrides for Dark Mode */
+.mat-mdc-form-field {
+  --mdc-outlined-text-field-label-text-color: var(--text-secondary);
+  --mdc-outlined-text-field-focus-label-text-color: var(--accent-primary);
+  --mdc-outlined-text-field-input-text-color: var(--text-primary);
+  --mdc-outlined-text-field-outline-color: rgba(255, 255, 255, 0.15);
+  --mdc-outlined-text-field-focus-outline-color: var(--accent-primary);
+}
+
+.mat-mdc-select-value, .mat-mdc-select-arrow {
+  color: var(--text-primary) !important;
+}
+
+/* Buttons */
+.mat-mdc-button, .mat-mdc-raised-button, .mat-mdc-flat-button {
+  border-radius: 6px !important;
+  font-weight: 600 !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.mat-mdc-raised-button.mat-primary {
+  background-color: var(--accent-primary) !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 14px rgba(139, 92, 246, 0.3) !important;
+}
+
+.mat-mdc-raised-button.mat-primary:hover {
+  background-color: #7c3aed !important;
+  box-shadow: 0 6px 20px rgba(139, 92, 246, 0.45) !important;
+  transform: translateY(-1px);
+}
+
+.mat-mdc-raised-button.mat-accent {
+  background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary)) !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 14px rgba(217, 70, 239, 0.3) !important;
+}
+
+.mat-mdc-raised-button.mat-accent:hover {
+  filter: brightness(1.1);
+  box-shadow: 0 6px 20px rgba(217, 70, 239, 0.45) !important;
+  transform: translateY(-1px);
+}
+
+/* Dashboard & Cards styling overrides */
+.dashboard-header h1, .list-header h1 {
+  color: var(--text-primary) !important;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
+.dashboard-header p, .list-header p {
+  color: var(--text-secondary) !important;
+}
+
+.section-title h2 {
+  color: var(--text-primary) !important;
+  font-weight: 700;
+}
+
+.view-all-link {
+  color: var(--accent-primary) !important;
+}
+
+/* Scrollbar Customization */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2a2b36;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #3e3f4f;
+}
+
+/* Text styles */
+.completed-text {
+  text-decoration: line-through;
+  color: var(--text-muted) !important;
+}
+
+.task-desc {
+  color: var(--text-secondary) !important;
+}
+
+/* Custom AI Assistant Panel Overrides */
+.ai-insights-card {
+  background: rgba(139, 92, 246, 0.05) !important;
+  border: 1px solid rgba(139, 92, 246, 0.25) !important;
+  box-shadow: 0 8px 32px 0 rgba(139, 92, 246, 0.05) !important;
+}
+
+.ai-placeholder {
+  border: 2px dashed rgba(139, 92, 246, 0.15) !important;
+  background: rgba(255, 255, 255, 0.01);
+}
+
+.ai-placeholder h3 {
+  color: var(--text-primary) !important;
+}
+
+.ai-placeholder p {
+  color: var(--text-secondary) !important;
+}
+
+.insight-item {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
+
+.insight-item.subtasks ul {
+  color: var(--text-secondary) !important;
+}
+
+.ai-loader p {
+  color: var(--text-secondary) !important;
+}
+
+/* Status selection menu dropdown overlay styling overrides */
+.cdk-overlay-container {
+  z-index: 2000;
+}
+
+.mat-mdc-select-panel {
+  background: var(--bg-secondary) !important;
+  border: 1px solid var(--card-border) !important;
+}
+
+.mat-mdc-option {
+  color: var(--text-secondary) !important;
+}
+
+.mat-mdc-option:hover, .mat-mdc-option.mat-mdc-option-active {
+  background: rgba(139, 92, 246, 0.08) !important;
+  color: var(--accent-primary) !important;
+}
+
+/* Task stats widget coloring */
+.metric-card.total { background: linear-gradient(135deg, rgba(25, 118, 210, 0.1), rgba(25, 118, 210, 0.02)) !important; }
+.metric-card.pending { background: linear-gradient(135deg, rgba(156, 39, 176, 0.1), rgba(156, 39, 176, 0.02)) !important; }
+.metric-card.in-progress { background: linear-gradient(135deg, rgba(255, 152, 0, 0.1), rgba(255, 152, 0, 0.02)) !important; }
+.metric-card.completed { background: linear-gradient(135deg, rgba(76, 175, 80, 0.1), rgba(76, 175, 80, 0.02)) !important; }
+.metric-card.high-priority { background: linear-gradient(135deg, rgba(244, 67, 54, 0.1), rgba(244, 67, 54, 0.02)) !important; }
+
+/* Micro-animations and transitions */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.task-summary-card, .task-card, .metric-card, .form-card {
+  animation: fadeIn 0.4s ease-out;
+}
