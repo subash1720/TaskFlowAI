@@ -84,7 +84,7 @@
               <mat-card-content>
                 <div class="insight-item">
                   <strong>Recommended Priority:</strong>
-                  <span class="badge" [ngClass]="aiAnalysis.priority.toLowerCase()">{{ aiAnalysis.priority }}</span>
+                  <span class="badge {{ aiAnalysis.priority.toLowerCase() }}">{{ aiAnalysis.priority }}</span>
                 </div>
                 <div class="insight-item">
                   <strong>Category Classification:</strong>

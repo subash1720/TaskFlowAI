@@ -70,19 +70,21 @@ export class TaskForm implements OnInit {
       return;
     }
 
+    console.log('🚀 AI Analysis Triggered for Title:', this.task.title);
     this.isAnalyzing = true;
     this.aiAnalysis = null;
 
     this.aiService.analyzeTask(this.task.title, this.task.description).subscribe({
       next: (response: any) => {
+        console.log('✅ AI Analysis Response Received:', response);
         this.isAnalyzing = false;
         if (response.success && response.analysis) {
           this.aiAnalysis = response.analysis;
         }
       },
       error: (error) => {
+        console.error('❌ AI Analysis HTTP Error:', error);
         this.isAnalyzing = false;
-        console.error(error);
         alert(error.error?.message || 'Failed to analyze task with AI.');
       }
     });
