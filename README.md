@@ -2,6 +2,10 @@
 
 TaskFlow AI is a modern, responsive, full-stack task management application built using **Angular (v21)**, **Node.js/Express**, and **MongoDB**. 
 
+### 🌐 Live Demo Links
+* **Frontend App (Vercel)**: [https://task-flow-ai-delta.vercel.app](https://task-flow-ai-delta.vercel.app)
+* **Backend API (Render)**: [https://taskflowai-bcnx.onrender.com](https://taskflowai-bcnx.onrender.com)
+
 It features an intelligent **AI Smart Task Assistant** simulation that automatically analyzes task titles to generate custom action items (subtasks), estimate effort, recommend priority levels, and classify categories, complete with a dark-themed glassmorphism user interface.
 
 ---
